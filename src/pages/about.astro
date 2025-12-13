@@ -1,63 +1,99 @@
 ---
-import AboutHeroImage from '../assets/blog-placeholder-about.jpg';
-import Layout from '../layouts/BlogPost.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<Layout
-	title="About Me"
-	description="Lorem ipsum dolor sit amet"
-	pubDate={new Date('August 08 2021')}
-	heroImage={AboutHeroImage}
->
-	<p>
-		Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-		labore et dolore magna aliqua. Vitae ultricies leo integer malesuada nunc vel risus commodo
-		viverra. Adipiscing enim eu turpis egestas pretium. Euismod elementum nisi quis eleifend quam
-		adipiscing. In hac habitasse platea dictumst vestibulum. Sagittis purus sit amet volutpat. Netus
-		et malesuada fames ac turpis egestas. Eget magna fermentum iaculis eu non diam phasellus
-		vestibulum lorem. Varius sit amet mattis vulputate enim. Habitasse platea dictumst quisque
-		sagittis. Integer quis auctor elit sed vulputate mi. Dictumst quisque sagittis purus sit amet.
-	</p>
+<BaseLayout title="About | Agentforce Vibes">
+  <section class="about">
+    <div class="container">
+      <div class="about__content">
+        <h1 class="about__title">About Agentforce Vibes</h1>
+        
+        <div class="about__body">
+          <p>
+            Welcome to Agentforce Vibes, a blog dedicated to exploring the rapidly evolving world of AI agents, 
+            automation, and enterprise technology transformation.
+          </p>
+          
+          <p>
+            AI is triggering the most profound organizational transformation since factories and the internet 
+            rewired work. This revolution is much bigger than any single AI tool. It's a complete system, 
+            and it's shifting power, culture, and decision-making across every level of the enterprise.
+          </p>
+          
+          <p>
+            Here, we explore what it means to build an <strong>agentic enterprise</strong> — where AI agents 
+            work alongside humans, hierarchies flatten, silos break down, and entirely new forms of 
+            collaboration emerge between humans and technology.
+          </p>
+          
+          <h2>What We Cover</h2>
+          
+          <p>
+            Our articles dive deep into topics like:
+          </p>
+          
+          <ul>
+            <li>Agentic AI and autonomous systems</li>
+            <li>Enterprise transformation strategies</li>
+            <li>Human-AI collaboration patterns</li>
+            <li>Practical implementation guides</li>
+            <li>Industry trends and insights</li>
+            <li>Best practices for AI adoption</li>
+          </ul>
+          
+          <h2>Get in Touch</h2>
+          
+          <p>
+            Have questions, feedback, or ideas for topics you'd like us to cover? We'd love to hear from you. 
+            Reach out to us on social media or drop us a line.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
 
-	<p>
-		Morbi tristique senectus et netus. Id semper risus in hendrerit gravida rutrum quisque non
-		tellus. Habitasse platea dictumst quisque sagittis purus sit amet. Tellus molestie nunc non
-		blandit massa. Cursus vitae congue mauris rhoncus. Accumsan tortor posuere ac ut. Fringilla urna
-		porttitor rhoncus dolor. Elit ullamcorper dignissim cras tincidunt lobortis. In cursus turpis
-		massa tincidunt dui ut ornare lectus. Integer feugiat scelerisque varius morbi enim nunc.
-		Bibendum neque egestas congue quisque egestas diam. Cras ornare arcu dui vivamus arcu felis
-		bibendum. Dignissim suspendisse in est ante in nibh mauris. Sed tempus urna et pharetra pharetra
-		massa massa ultricies mi.
-	</p>
-
-	<p>
-		Mollis nunc sed id semper risus in. Convallis a cras semper auctor neque. Diam sit amet nisl
-		suscipit. Lacus viverra vitae congue eu consequat ac felis donec. Egestas integer eget aliquet
-		nibh praesent tristique magna sit amet. Eget magna fermentum iaculis eu non diam. In vitae
-		turpis massa sed elementum. Tristique et egestas quis ipsum suspendisse ultrices. Eget lorem
-		dolor sed viverra ipsum. Vel turpis nunc eget lorem dolor sed viverra. Posuere ac ut consequat
-		semper viverra nam. Laoreet suspendisse interdum consectetur libero id faucibus. Diam phasellus
-		vestibulum lorem sed risus ultricies tristique. Rhoncus dolor purus non enim praesent elementum
-		facilisis. Ultrices tincidunt arcu non sodales neque. Tempus egestas sed sed risus pretium quam
-		vulputate. Viverra suspendisse potenti nullam ac tortor vitae purus faucibus ornare. Fringilla
-		urna porttitor rhoncus dolor purus non. Amet dictum sit amet justo donec enim.
-	</p>
-
-	<p>
-		Mattis ullamcorper velit sed ullamcorper morbi tincidunt. Tortor posuere ac ut consequat semper
-		viverra. Tellus mauris a diam maecenas sed enim ut sem viverra. Venenatis urna cursus eget nunc
-		scelerisque viverra mauris in. Arcu ac tortor dignissim convallis aenean et tortor at. Curabitur
-		gravida arcu ac tortor dignissim convallis aenean et tortor. Egestas tellus rutrum tellus
-		pellentesque eu. Fusce ut placerat orci nulla pellentesque dignissim enim sit amet. Ut enim
-		blandit volutpat maecenas volutpat blandit aliquam etiam. Id donec ultrices tincidunt arcu. Id
-		cursus metus aliquam eleifend mi.
-	</p>
-
-	<p>
-		Tempus quam pellentesque nec nam aliquam sem. Risus at ultrices mi tempus imperdiet. Id porta
-		nibh venenatis cras sed felis eget velit. Ipsum a arcu cursus vitae. Facilisis magna etiam
-		tempor orci eu lobortis elementum. Tincidunt dui ut ornare lectus sit. Quisque non tellus orci
-		ac. Blandit libero volutpat sed cras. Nec tincidunt praesent semper feugiat nibh sed pulvinar
-		proin gravida. Egestas integer eget aliquet nibh praesent tristique magna.
-	</p>
-</Layout>
+<style>
+  .about {
+    padding: var(--space-16) 0 var(--space-20);
+  }
+  
+  .about__content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  
+  .about__title {
+    font-size: var(--text-5xl);
+    margin-bottom: var(--space-10);
+    text-align: center;
+  }
+  
+  .about__body h2 {
+    font-size: var(--text-2xl);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-4);
+  }
+  
+  .about__body p {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+  }
+  
+  .about__body ul {
+    margin-bottom: var(--space-6);
+    padding-left: var(--space-8);
+  }
+  
+  .about__body li {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2);
+    color: var(--color-text-secondary);
+  }
+  
+  .about__body strong {
+    color: var(--color-text-primary);
+  }
+</style>

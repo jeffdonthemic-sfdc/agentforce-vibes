@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+interface Props {
+  post: CollectionEntry<'blog'>;
+}
+
+const { post } = Astro.props;
+const { title, description, pubDate, heroImage } = post.data;
+---
+
+<section class="featured-post">
+  <div class="container">
+    <a href={`/blog/${post.slug}`} class="featured-post__card">
+      <div class="featured-post__image">
+        {heroImage ? (
+          <img src={heroImage} alt={title} />
+        ) : (
+          <div class="featured-post__image-placeholder"></div>
+        )}
+      </div>
+      <div class="featured-post__content">
+        <span class="featured-post__badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Featured
+        </span>
+        <h2 class="featured-post__title">{title}</h2>
+        {description && <p class="featured-post__excerpt">{description}</p>}
+        <div class="featured-post__meta">
+          <FormattedDate date={pubDate} />
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<style>
+  .featured-post__image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
+  }
+</style>

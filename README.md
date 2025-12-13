@@ -1,62 +1,167 @@
-# Astro Starter Kit: Blog
+# Agentforce Vibes
 
-```sh
-npm create astro@latest -- --template blog
+A clean, professional blog theme for Astro inspired by the Salesforce blog design. Features dark mode, search functionality, social sharing, and a responsive layout.
+
+## Features
+
+- 🎨 **Salesforce-inspired design** — Clean, professional aesthetic with the signature blue color scheme
+- 🌙 **Dark mode** — Toggle between light and dark themes
+- 🔍 **Search** — Client-side search with keyboard shortcuts (⌘/Ctrl + K)
+- 📱 **Responsive** — Looks great on desktop, tablet, and mobile
+- 📤 **Social sharing** — Share posts to Twitter, LinkedIn, Facebook, or copy the link
+- ⚡ **Fast** — Static site generation with Astro
+- 📝 **Markdown-based** — Write posts in Markdown or MDX
+
+## Project Structure
+
 ```
-
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-Features:
-
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and OpenGraph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
+agentforce-vibes/
 ├── src/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
+│   ├── components/        # Reusable UI components
+│   │   ├── Header.astro
+│   │   ├── Footer.astro
+│   │   ├── Hero.astro
+│   │   ├── FeaturedPost.astro
+│   │   ├── PostCard.astro
+│   │   ├── FormattedDate.astro
+│   │   ├── SearchOverlay.astro
+│   │   └── SocialShare.astro
+│   ├── content/
+│   │   └── blog/          # Your blog posts (Markdown/MDX)
+│   ├── layouts/
+│   │   ├── BaseLayout.astro
+│   │   └── BlogPost.astro
+│   ├── pages/
+│   │   ├── index.astro    # Homepage
+│   │   ├── about.astro    # About page
+│   │   └── blog/
+│   │       ├── index.astro
+│   │       └── [...slug].astro
+│   └── styles/
+│       └── global.css     # All styles
+├── public/                # Static assets
 ├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+└── package.json
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Getting Started
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+### Prerequisites
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+- Node.js 18+ 
+- npm or yarn
 
-Any static assets, like images, can be placed in the `public/` directory.
+### Installation
 
-## 🧞 Commands
+1. Clone or copy this theme to your project directory
 
-All commands are run from the root of the project, from a terminal:
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
-## 👀 Want to learn more?
+4. Open http://localhost:4321 in your browser
 
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+### Configuration
 
-## Credit
+Update `astro.config.mjs` with your site URL and base path:
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+```javascript
+export default defineConfig({
+  site: 'https://your-username.github.io',
+  base: '/your-repo-name',
+  integrations: [mdx(), sitemap()],
+});
+```
+
+## Writing Blog Posts
+
+Create new posts in `src/content/blog/` as Markdown files:
+
+```markdown
+---
+title: 'Your Post Title'
+description: 'A brief description for SEO and previews'
+pubDate: 'Dec 13 2025'
+heroImage: '/agentforce-vibes/your-image.jpg'
+---
+
+Your content here...
+```
+
+### Frontmatter Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `title` | Yes | The post title |
+| `description` | No | Brief description for SEO and post cards |
+| `pubDate` | Yes | Publication date |
+| `updatedDate` | No | Last updated date |
+| `heroImage` | No | Path to hero image |
+
+## Customization
+
+### Colors
+
+Edit the CSS custom properties in `src/styles/global.css`:
+
+```css
+:root {
+  --color-primary: #0176d3;
+  --color-primary-dark: #014486;
+  --color-primary-light: #1b96ff;
+  --color-accent: #00a1e0;
+  /* ... */
+}
+```
+
+### Site Title & Description
+
+Update the hero section in `src/pages/index.astro`:
+
+```astro
+<Hero 
+  title="Your Blog Name" 
+  description="Your blog description..."
+/>
+```
+
+### About Page
+
+Edit `src/pages/about.astro` with your own content.
+
+## Deployment
+
+### GitHub Pages
+
+1. Update `astro.config.mjs` with your GitHub Pages URL
+2. Push to GitHub
+3. Enable GitHub Pages in repository settings (Settings → Pages → Source: GitHub Actions)
+4. The included workflow will automatically build and deploy on push to `main`
+
+### Other Platforms
+
+Build the static site:
+
+```bash
+npm run build
+```
+
+The output will be in the `dist/` folder, ready to deploy to any static hosting service.
+
+## Commands
+
+| Command | Action |
+|---------|--------|
+| `npm run dev` | Start development server at `localhost:4321` |
+| `npm run build` | Build production site to `./dist/` |
+| `npm run preview` | Preview build locally before deploying |
+
+## License
+
+MIT

@@ -1,0 +1,187 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import SearchOverlay from '../components/SearchOverlay.astro';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+}
+
+const { title, description = 'Agentforce Vibes - Insights on AI, Agents, and the Future of Work', image = '/og-image.png' } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={new URL(image, Astro.url)} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL(image, Astro.url)} />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+    
+    <style>
+      :root {
+        --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+    </style>
+    
+    <!-- Theme Script (runs before page renders to prevent flash) -->
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+      
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    </script>
+  </head>
+  <body>
+    <Header />
+    <SearchOverlay />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    
+    <!-- Theme Toggle Script -->
+    <script>
+      function initThemeToggle() {
+        const toggle = document.getElementById('theme-toggle');
+        if (!toggle) return;
+        
+        toggle.addEventListener('click', () => {
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          const newTheme = isDark ? 'light' : 'dark';
+          
+          document.documentElement.setAttribute('data-theme', newTheme);
+          localStorage.setItem('theme', newTheme);
+        });
+      }
+      
+      initThemeToggle();
+      document.addEventListener('astro:after-swap', initThemeToggle);
+    </script>
+    
+    <!-- Search Script -->
+    <script>
+      function initSearch() {
+        const searchToggle = document.getElementById('search-toggle');
+        const searchOverlay = document.getElementById('search-overlay');
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        
+        if (!searchToggle || !searchOverlay || !searchInput) return;
+        
+        // Open search
+        searchToggle.addEventListener('click', () => {
+          searchOverlay.classList.add('active');
+          searchInput.focus();
+        });
+        
+        // Close search on overlay click
+        searchOverlay.addEventListener('click', (e) => {
+          if (e.target === searchOverlay) {
+            searchOverlay.classList.remove('active');
+            searchInput.value = '';
+            if (searchResults) searchResults.innerHTML = '';
+          }
+        });
+        
+        // Close search on Escape
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && searchOverlay.classList.contains('active')) {
+            searchOverlay.classList.remove('active');
+            searchInput.value = '';
+            if (searchResults) searchResults.innerHTML = '';
+          }
+          
+          // Open search with Cmd/Ctrl + K
+          if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+            e.preventDefault();
+            searchOverlay.classList.add('active');
+            searchInput.focus();
+          }
+        });
+        
+        // Search functionality
+        let posts = [];
+        
+        async function loadPosts() {
+          try {
+            const response = await fetch('/search-index.json');
+            posts = await response.json();
+          } catch (e) {
+            console.log('Search index not available');
+          }
+        }
+        
+        loadPosts();
+        
+        searchInput.addEventListener('input', (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          
+          if (!query || !searchResults) {
+            if (searchResults) searchResults.innerHTML = '';
+            return;
+          }
+          
+          const results = posts.filter(post => 
+            post.title.toLowerCase().includes(query) ||
+            post.description.toLowerCase().includes(query)
+          ).slice(0, 5);
+          
+          if (results.length === 0) {
+            searchResults.innerHTML = '<div class="search-no-results">No results found</div>';
+            return;
+          }
+          
+          searchResults.innerHTML = results.map(post => `
+            <a href="${post.url}" class="search-result-item">
+              <h4>${post.title}</h4>
+              <p>${post.description}</p>
+            </a>
+          `).join('');
+        });
+      }
+      
+      initSearch();
+      document.addEventListener('astro:after-swap', initSearch);
+    </script>
+  </body>
+</html>
