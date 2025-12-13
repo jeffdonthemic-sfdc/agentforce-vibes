@@ -1,12 +1,13 @@
 import { getCollection } from 'astro:content';
 
-export async function GET() {
+export async function GET({ site }) {
   const posts = await getCollection('blog');
+  const base = import.meta.env.BASE_URL;
   
   const searchIndex = posts.map((post) => ({
     title: post.data.title,
     description: post.data.description || '',
-    url: `/blog/${post.slug}`,
+    url: `${base}/blog/${post.slug}`,
     pubDate: post.data.pubDate.toISOString(),
   }));
   

@@ -1,18 +1,19 @@
 ---
 const { pathname } = Astro.url;
+const base = import.meta.env.BASE_URL;
 ---
 
 <header class="header">
   <div class="container header__inner">
-    <a href="/" class="header__logo">
+    <a href={base + "/"} class="header__logo">
       <span class="header__logo-icon">AV</span>
       <span>Agentforce Vibes</span>
     </a>
     
     <nav class="header__nav">
-      <a href="/" class:list={["header__nav-link", { active: pathname === "/" }]}>Home</a>
-      <a href="/blog" class:list={["header__nav-link", { active: pathname.startsWith("/blog") }]}>Blog</a>
-      <a href="/about" class:list={["header__nav-link", { active: pathname === "/about" }]}>About</a>
+      <a href={base + "/"} class:list={["header__nav-link", { active: pathname === base + "/" }]}>Home</a>
+      <a href={base + "/blog"} class:list={["header__nav-link", { active: pathname.startsWith(base + "/blog") }]}>Blog</a>
+      <a href={base + "/about"} class:list={["header__nav-link", { active: pathname === base + "/about" }]}>About</a>
     </nav>
     
     <div class="header__actions">

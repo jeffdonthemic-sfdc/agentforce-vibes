@@ -8,11 +8,12 @@ interface Props {
 
 const { post } = Astro.props;
 const { title, description, pubDate, heroImage } = post.data;
+const base = import.meta.env.BASE_URL;
 ---
 
 <section class="featured-post">
   <div class="container">
-    <a href={`/blog/${post.slug}`} class="featured-post__card">
+    <a href={`${base}/blog/${post.slug}`} class="featured-post__card">
       <div class="featured-post__image">
         {heroImage ? (
           <img src={heroImage} alt={title} />
