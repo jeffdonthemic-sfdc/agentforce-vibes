@@ -1,0 +1,128 @@
+---
+interface ResourceCard {
+  type: string;
+  title: string;
+  image: string;
+  url: string;
+}
+
+const cards: ResourceCard[] = [
+  {
+    type: 'Read',
+    title: 'Unleash Your Innovation with Agentforce Vibes: Vibe Coding for the Enterprise',
+    image: '/agentforce-vibes/unleash-your-innovation.png',
+    url: 'https://developer.salesforce.com/blogs/2025/10/unleash-your-innovation-with-agentforce-vibes-vibe-coding-for-the-enterprise'
+  },
+  {
+    type: 'Watch',
+    title: 'Dreamforce 25: Agentforce Vibes Turns Context into Code',
+    image: '/agentforce-vibes/df25-dev-keynote.png',
+    url: 'https://www.salesforce.com/plus/experience/dreamforce_2025/series/must-see_keynote_moments_2025/episode/episode-s1e13'
+  },
+  {
+    type: 'Code',
+    title: 'Agentforce Vibes Prompt & Rules Library',
+    image: '/agentforce-vibes/vector-store.jpg',
+    url: 'https://github.com/forcedotcom/afv-library'
+  }
+];
+---
+
+<section class="resource-cards">
+  <div class="container">
+    <div class="resource-cards__grid">
+      {cards.map((card) => (
+        <a href={card.url} target="_blank" rel="noopener noreferrer" class="resource-card">
+          <div class="resource-card__image">
+            <img src={card.image} alt={card.title} loading="lazy" />
+          </div>
+          <div class="resource-card__content">
+            <span class="resource-card__type">{card.type}</span>
+            <h3 class="resource-card__title">{card.title}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .resource-cards {
+    padding: var(--space-6) 0 var(--space-8);
+    background-color: var(--color-background);
+  }
+  
+  .resource-cards__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 640px) {
+    .resource-cards__grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+  }
+  
+  .resource-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-3);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease;
+    text-decoration: none;
+    color: inherit;
+    padding: var(--space-3);
+  }
+  
+  .resource-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  }
+  
+  .resource-card__image {
+    flex-shrink: 0;
+    width: 80px;
+    height: 60px;
+    overflow: hidden;
+    background-color: var(--color-background-secondary);
+    border-radius: var(--radius-sm);
+  }
+  
+  .resource-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .resource-card__content {
+    flex: 1;
+    min-width: 0;
+  }
+  
+  .resource-card__type {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--color-primary);
+    margin-bottom: 2px;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  
+  .resource-card__title {
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+</style>
+

@@ -1,7 +1,7 @@
 ---
 title: 'Vibe Coding Salesforce Applications'
 description: 'Experimenting with vibe coding to build a complete Salesforce purchasing application using just high-level prompts and AI collaboration - from data models to Lightning Web Components.'
-pubDate: 'Dec 10 2025'
+pubDate: 'Dec 9 2025'
 heroImage: '/agentforce-vibes/vibe-coding-salesforce.jpg'
 ---
 

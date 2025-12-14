@@ -4,9 +4,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import PostCard from '../components/PostCard.astro';
+import ResourceCards from '../components/ResourceCards.astro';
 import GetStartedCTA from '../components/GetStartedCTA.astro';
 import WatchLearn from '../components/WatchLearn.astro';
 import TrailheadSection from '../components/TrailheadSection.astro';
+
+const base = import.meta.env.BASE_URL;
 
 // Get all posts sorted by date
 const posts = (await getCollection('blog')).sort(
@@ -15,8 +18,8 @@ const posts = (await getCollection('blog')).sort(
 
 // Featured post is the most recent
 const featuredPost = posts[0];
-// Remaining posts for the grid
-const gridPosts = posts.slice(1);
+// Next 6 posts for the grid
+const gridPosts = posts.slice(1, 7);
 ---
 
 <BaseLayout title="Agentforce Vibes">
@@ -26,6 +29,8 @@ const gridPosts = posts.slice(1);
   />
   
   {featuredPost && <FeaturedPost post={featuredPost} />}
+  
+  <ResourceCards />
   
   {gridPosts.length > 0 && (
     <section class="posts-section">
@@ -37,6 +42,15 @@ const gridPosts = posts.slice(1);
           {gridPosts.map((post) => (
             <PostCard post={post} />
           ))}
+        </div>
+        <div class="section-view-all">
+          <a href={base + "/blog"} class="view-all-link">
+            View All Articles
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14"></path>
+              <path d="m12 5 7 7-7 7"></path>
+            </svg>
+          </a>
         </div>
       </div>
     </section>
