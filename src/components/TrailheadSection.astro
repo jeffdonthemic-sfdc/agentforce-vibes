@@ -94,7 +94,7 @@ const cards: TrailheadCard[] = [
     background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
   }
   
-  [data-theme="dark"] .trailhead-section {
+  :global([data-theme="dark"]) .trailhead-section {
     background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
   }
   
@@ -116,7 +116,7 @@ const cards: TrailheadCard[] = [
     max-width: 700px;
   }
   
-  [data-theme="dark"] .trailhead-section__title {
+  :global([data-theme="dark"]) .trailhead-section__title {
     color: #ffffff;
   }
   
@@ -127,7 +127,7 @@ const cards: TrailheadCard[] = [
     max-width: 600px;
   }
   
-  [data-theme="dark"] .trailhead-section__description {
+  :global([data-theme="dark"]) .trailhead-section__description {
     color: #c9d1d9;
   }
   
@@ -166,7 +166,7 @@ const cards: TrailheadCard[] = [
     transition: all 0.3s ease;
   }
   
-  [data-theme="dark"] .trailhead-card {
+  :global([data-theme="dark"]) .trailhead-card {
     background: var(--color-gray-800);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
@@ -176,7 +176,7 @@ const cards: TrailheadCard[] = [
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
   }
   
-  [data-theme="dark"] .trailhead-card:hover {
+  :global([data-theme="dark"]) .trailhead-card:hover {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   }
   
@@ -202,7 +202,7 @@ const cards: TrailheadCard[] = [
     margin-bottom: var(--space-3);
   }
   
-  [data-theme="dark"] .trailhead-card__type {
+  :global([data-theme="dark"]) .trailhead-card__type {
     background-color: #2C5282;
     color: #5BC0BE;
   }
@@ -236,11 +236,11 @@ const cards: TrailheadCard[] = [
     text-decoration: underline;
   }
   
-  [data-theme="dark"] .trailhead-card__link {
+  :global([data-theme="dark"]) .trailhead-card__link {
     color: #5BC0BE;
   }
   
-  [data-theme="dark"] .trailhead-card__link:hover {
+  :global([data-theme="dark"]) .trailhead-card__link:hover {
     color: #7DD3D0;
   }
 </style>
