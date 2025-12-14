@@ -12,6 +12,7 @@ interface Props {
 
 const { title, description = 'Agentforce Vibes - Insights on AI, Agents, and the Future of Work', image = '/og-image.png' } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const base = import.meta.env.BASE_URL;
 ---
 
 <!doctype html>
@@ -19,8 +20,12 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href={base + "/favicon.png"} />
+    <link rel="apple-touch-icon" href={base + "/favicon.png"} />
     <meta name="generator" content={Astro.generator} />
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="Agentforce Vibes RSS Feed" href={base + "/rss.xml"} />
     
     <!-- Primary Meta Tags -->
     <title>{title}</title>
@@ -173,8 +178,13 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
           }
           
           searchResults.innerHTML = results.map(item => {
-            const typeLabel = item.type === 'video' ? `🎥 ${item.duration}` : '📝 Article';
-            const target = item.type === 'video' ? 'target="_blank" rel="noopener noreferrer"' : '';
+            let typeLabel = '📝 Article';
+            if (item.type === 'video') {
+              typeLabel = `🎥 ${item.duration}`;
+            } else if (item.type === 'resource') {
+              typeLabel = `📚 ${item.resourceType}`;
+            }
+            const target = (item.type === 'video' || item.type === 'resource') ? 'target="_blank" rel="noopener noreferrer"' : '';
             return `
               <a href="${item.url}" class="search-result-item" ${target}>
                 <div class="search-result-meta">${typeLabel}</div>

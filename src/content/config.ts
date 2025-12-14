@@ -23,4 +23,16 @@ const videos = defineCollection({
   }),
 });
 
-export const collections = { blog, videos };
+const resources = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+    type: z.string(),
+    url: z.string().url(),
+    image: z.string(),
+    pubDate: z.coerce.date(),
+  }),
+});
+
+export const collections = { blog, videos, resources };

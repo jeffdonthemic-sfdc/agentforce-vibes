@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ResourceCard from '../../components/ResourceCard.astro';
+
+// Get all resources sorted by date (newest first)
+const resources = (await getCollection('resources')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Resources | Agentforce Vibes">
+  <section class="resources-index">
+    <div class="container">
+      <header class="resources-index__header">
+        <h1 class="resources-index__title">Resources</h1>
+        <p class="resources-index__description">
+          Discover curated resources, guides, and tools to help you get the most out of Agentforce Vibes.
+        </p>
+      </header>
+
+      {resources.length > 0 ? (
+        <div class="resources-grid">
+          {resources.map((resource) => (
+            <ResourceCard
+              title={resource.data.title}
+              description={resource.data.description}
+              type={resource.data.type}
+              url={resource.data.url}
+              image={resource.data.image}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="resources-index__empty">
+          <p>No resources yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .resources-index {
+    padding: var(--space-20) 0;
+  }
+  
+  .resources-index__header {
+    text-align: center;
+    margin-bottom: var(--space-16);
+  }
+  
+  .resources-index__title {
+    font-size: var(--text-5xl);
+    font-weight: 700;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-primary);
+  }
+  
+  .resources-index__description {
+    font-size: var(--text-xl);
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .resources-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  
+  @media (min-width: 768px) {
+    .resources-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .resources-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .resources-index__empty {
+    text-align: center;
+    padding: var(--space-16);
+    color: var(--color-text-muted);
+  }
+</style>
+
