@@ -1,0 +1,151 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+
+<section class="get-started-cta">
+  <div class="container">
+    <div class="get-started-cta__inner">
+      <div class="get-started-cta__content">
+        <div class="get-started-cta__badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+          Get Started Today
+        </div>
+        
+        <h2 class="get-started-cta__title">Discover the power of Agentforce Vibes.</h2>
+        
+        <p class="get-started-cta__description">
+          Get started building on the Agentforce 360 Platform with the help of Agentforce today. Enable agentic development capabilities powered by a context-aware model of your choice, directly within your standard Salesforce IDE tooling–whether that's <a href="https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-overview.html" target="_blank" rel="noopener noreferrer">Agentforce Vibes IDE</a> or Visual Studio Code.
+        </p>
+        
+        <a href="https://marketplace.visualstudio.com/items?itemName=salesforce.salesforcedx-einstein-gpt" target="_blank" rel="noopener noreferrer" class="get-started-cta__button">
+          Download the Extension
+        </a>
+      </div>
+      
+      <div class="get-started-cta__image">
+        <img src="https://wp.sfdcdigital.com/en-us/wp-content/uploads/sites/4/2025/10/2160x1280.png?resize=2048,1153" alt="Agentforce Vibes" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .get-started-cta {
+    padding: var(--space-20) 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  }
+  
+  [data-theme="dark"] .get-started-cta {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+  }
+  
+  .get-started-cta__inner {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-12);
+    align-items: center;
+  }
+  
+  @media (min-width: 1024px) {
+    .get-started-cta__inner {
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+  }
+  
+  .get-started-cta__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-2) var(--space-4);
+    background-color: rgba(0, 112, 210, 0.1);
+    color: var(--color-primary);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    margin-bottom: var(--space-6);
+  }
+  
+  .get-started-cta__badge svg {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
+    stroke: none;
+  }
+  
+  .get-started-cta__title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-6);
+    color: var(--color-text-primary);
+  }
+  
+  [data-theme="dark"] .get-started-cta__title {
+    color: #ffffff;
+  }
+  
+  @media (min-width: 768px) {
+    .get-started-cta__title {
+      font-size: var(--text-5xl);
+    }
+  }
+  
+  .get-started-cta__description {
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-8);
+    max-width: 600px;
+  }
+  
+  [data-theme="dark"] .get-started-cta__description {
+    color: #c9d1d9;
+  }
+  
+  .get-started-cta__description a {
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+  
+  .get-started-cta__description a:hover {
+    text-decoration: underline;
+  }
+  
+  .get-started-cta__button {
+    display: inline-block;
+    padding: var(--space-4) var(--space-8);
+    background-color: #0070d2;
+    color: white;
+    font-size: var(--text-base);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  
+  .get-started-cta__button:hover {
+    background-color: #005fb2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 112, 210, 0.3);
+  }
+  
+  .get-started-cta__image {
+    position: relative;
+    width: 100%;
+  }
+  
+  .get-started-cta__image img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-xl);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  }
+  
+  [data-theme="dark"] .get-started-cta__image img {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  }
+</style>
+

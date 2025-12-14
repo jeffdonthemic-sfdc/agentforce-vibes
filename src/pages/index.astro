@@ -4,6 +4,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import FeaturedPost from '../components/FeaturedPost.astro';
 import PostCard from '../components/PostCard.astro';
+import GetStartedCTA from '../components/GetStartedCTA.astro';
+import WatchLearn from '../components/WatchLearn.astro';
+import TrailheadSection from '../components/TrailheadSection.astro';
 
 // Get all posts sorted by date
 const posts = (await getCollection('blog')).sort(
@@ -38,4 +41,10 @@ const gridPosts = posts.slice(1);
       </div>
     </section>
   )}
+  
+  <GetStartedCTA />
+  
+  <WatchLearn />
+  
+  <TrailheadSection />
 </BaseLayout>

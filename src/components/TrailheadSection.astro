@@ -1,0 +1,247 @@
+---
+const base = import.meta.env.BASE_URL;
+
+interface TrailheadCard {
+  type: 'Trail' | 'Module' | 'Project';
+  title: string;
+  description: string;
+  url: string;
+  badgeImage?: string;
+}
+
+const cards: TrailheadCard[] = [
+  {
+    type: 'Project',
+    title: 'Troubleshoot Code with Agentforce Vibes',
+    description: 'Refine Apex and LWC through natural language chat with Agentforce.',
+    url: 'https://trailhead.salesforce.com/content/learn/projects/quick-start-troubleshoot-code-with-dev-agent',
+    badgeImage: 'https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/projects/quick-start-troubleshoot-code-with-dev-agent/9716d5029f17c3139af78f276179d793_badge.png'
+  },
+  {
+    type: 'Module',
+    title: 'Agentforce Vibes Extension',
+    description: 'Use generative AI features to improve developer productivity.',
+    url: 'https://trailhead.salesforce.com/content/learn/modules/einstein-for-developers',
+    badgeImage: 'https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/modules/einstein-for-developers/ecb8eb309adeb768d4140bec2d21c2f6_badge.png'
+  },
+  {
+    type: 'Module',
+    title: 'Agentforce Vibes IDE: Quick Look',
+    description: 'Develop from a browser using Agentforce Vibes IDE.',
+    url: 'https://trailhead.salesforce.com/content/learn/modules/code-builder-quick-look',
+    badgeImage: 'https://res.cloudinary.com/hy4kyit2a/f_auto,fl_lossy,q_70/learn/modules/code-builder-quick-look/870ebb74011a69d18822a53fac579df9_badge.png'
+  }
+];
+---
+
+<section class="trailhead-section">
+  <div class="container">
+    <div class="trailhead-section__header">
+      <div>
+        <h2 class="trailhead-section__title">Build your agentic AI skills and future-proof your career</h2>
+        <p class="trailhead-section__description">
+          Follow guided skill paths and get hands-on with Trailhead, our free online learning platform.
+        </p>
+      </div>
+      <div class="trailhead-section__logo">
+        <img src={base + "/trailhead-logo.svg"} alt="Trailhead" />
+      </div>
+    </div>
+    
+    <div class="trailhead-grid">
+      {cards.map((card) => (
+        <article class="trailhead-card">
+          <div class="trailhead-card__icon">
+            {card.badgeImage ? (
+              <img src={card.badgeImage} alt={card.title} loading="lazy" />
+            ) : card.type === 'Trail' ? (
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <rect width="100" height="100" rx="10" fill="#7CB8C4"/>
+                <circle cx="35" cy="35" r="8" fill="white"/>
+                <circle cx="65" cy="35" r="8" fill="white"/>
+                <path d="M 30 60 Q 50 75 70 60" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+                <path d="M 50 70 L 50 85" stroke="white" stroke-width="3"/>
+                <path d="M 35 85 L 65 85" stroke="white" stroke-width="3"/>
+              </svg>
+            ) : (
+              <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="45" fill="#2C5282" stroke="#5BC0BE" stroke-width="3"/>
+                <rect x="30" y="35" width="20" height="30" rx="2" fill="#5BC0BE"/>
+                <circle cx="40" cy="28" r="6" fill="#5BC0BE"/>
+                <rect x="55" y="40" width="15" height="8" rx="1" fill="white"/>
+                <rect x="55" cy="52" width="15" height="8" rx="1" fill="white"/>
+              </svg>
+            )}
+          </div>
+          
+          <div class="trailhead-card__content">
+            <span class="trailhead-card__type">{card.type}</span>
+            <h3 class="trailhead-card__title">{card.title}</h3>
+            <p class="trailhead-card__description">{card.description}</p>
+            <a href={card.url} target="_blank" rel="noopener noreferrer" class="trailhead-card__link">
+              Start learning
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .trailhead-section {
+    padding: var(--space-20) 0;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  }
+  
+  [data-theme="dark"] .trailhead-section {
+    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
+  }
+  
+  .trailhead-section__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--space-8);
+    margin-bottom: var(--space-12);
+    flex-wrap: wrap;
+  }
+  
+  .trailhead-section__title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    line-height: var(--leading-tight);
+    margin-bottom: var(--space-4);
+    color: var(--color-text-primary);
+    max-width: 700px;
+  }
+  
+  [data-theme="dark"] .trailhead-section__title {
+    color: #ffffff;
+  }
+  
+  .trailhead-section__description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    max-width: 600px;
+  }
+  
+  [data-theme="dark"] .trailhead-section__description {
+    color: #c9d1d9;
+  }
+  
+  .trailhead-section__logo {
+    flex-shrink: 0;
+  }
+  
+  .trailhead-section__logo img {
+    width: 120px;
+    height: auto;
+  }
+  
+  .trailhead-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  
+  @media (min-width: 768px) {
+    .trailhead-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .trailhead-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .trailhead-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  [data-theme="dark"] .trailhead-card {
+    background: var(--color-gray-800);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .trailhead-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+  
+  [data-theme="dark"] .trailhead-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  
+  .trailhead-card__icon {
+    margin-bottom: var(--space-6);
+  }
+  
+  .trailhead-card__icon svg,
+  .trailhead-card__icon img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+  }
+  
+  .trailhead-card__type {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background-color: #e6f4f7;
+    color: #2C5282;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-3);
+  }
+  
+  [data-theme="dark"] .trailhead-card__type {
+    background-color: #2C5282;
+    color: #5BC0BE;
+  }
+  
+  .trailhead-card__title {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    line-height: var(--leading-snug);
+    margin-bottom: var(--space-3);
+    color: var(--color-text-primary);
+  }
+  
+  .trailhead-card__description {
+    font-size: var(--text-base);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-6);
+  }
+  
+  .trailhead-card__link {
+    display: inline-block;
+    color: #2C5282;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: var(--text-base);
+    transition: color 0.2s ease;
+  }
+  
+  .trailhead-card__link:hover {
+    color: #1a3a52;
+    text-decoration: underline;
+  }
+  
+  [data-theme="dark"] .trailhead-card__link {
+    color: #5BC0BE;
+  }
+  
+  [data-theme="dark"] .trailhead-card__link:hover {
+    color: #7DD3D0;
+  }
+</style>
+

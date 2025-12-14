@@ -1,0 +1,134 @@
+---
+interface Props {
+  title: string;
+  duration: string;
+  videoUrl: string;
+  description?: string;
+  thumbnail?: string;
+}
+
+const { title, duration, videoUrl, description, thumbnail } = Astro.props;
+---
+
+<article class="video-card">
+  <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+    <div class="video-card__thumbnail">
+      {thumbnail ? (
+        <img src={thumbnail} alt={title} loading="lazy" />
+      ) : (
+        <div class="video-card__thumbnail-placeholder"></div>
+      )}
+      <div class="video-card__play-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M8 5v14l11-7z"/>
+        </svg>
+      </div>
+    </div>
+    <div class="video-card__content">
+      <div class="video-card__meta">Watch • {duration}</div>
+      <h3 class="video-card__title">{title}</h3>
+      {description && <p class="video-card__description">{description}</p>}
+    </div>
+  </a>
+</article>
+
+<style>
+  .video-card a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .video-card a:hover {
+    transform: translateY(-4px);
+  }
+  
+  .video-card__thumbnail {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background-color: var(--color-gray-200);
+  }
+  
+  [data-theme="dark"] .video-card__thumbnail {
+    background-color: var(--color-gray-800);
+  }
+  
+  .video-card__thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .video-card__thumbnail-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--color-gray-300) 0%, var(--color-gray-400) 100%);
+  }
+  
+  [data-theme="dark"] .video-card__thumbnail-placeholder {
+    background: linear-gradient(135deg, var(--color-gray-700) 0%, var(--color-gray-600) 100%);
+  }
+  
+  .video-card__play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 64px;
+    height: 64px;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  
+  [data-theme="dark"] .video-card__play-button {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+  
+  .video-card a:hover .video-card__play-button {
+    transform: translate(-50%, -50%) scale(1.1);
+    background-color: rgba(255, 255, 255, 1);
+  }
+  
+  .video-card__play-button svg {
+    width: 28px;
+    height: 28px;
+    color: var(--color-primary);
+    margin-left: 3px;
+  }
+  
+  .video-card__content {
+    padding: var(--space-4) 0;
+  }
+  
+  .video-card__meta {
+    font-size: var(--text-sm);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-2);
+  }
+  
+  .video-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-snug);
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-2);
+  }
+  
+  .video-card__description {
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    line-height: var(--leading-relaxed);
+    margin: 0;
+  }
+</style>
+

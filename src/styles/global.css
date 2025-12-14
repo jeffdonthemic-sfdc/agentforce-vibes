@@ -226,15 +226,9 @@ strong {
 
 .header__logo-icon {
   width: 40px;
-  height: 40px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: var(--text-lg);
+  height: 26px;
+  display: block;
+  object-fit: contain;
 }
 
 .header__nav {
@@ -870,15 +864,9 @@ strong {
 
 .footer__logo-icon {
   width: 32px;
-  height: 32px;
-  background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-weight: 700;
-  font-size: var(--text-sm);
+  height: 21px;
+  display: block;
+  object-fit: contain;
 }
 
 .footer__copyright {

@@ -1,23 +1,17 @@
 ---
-const currentYear = new Date().getFullYear();
 const base = import.meta.env.BASE_URL;
 ---
 
 <footer class="footer">
   <div class="container footer__inner">
     <a href={base + "/"} class="footer__logo">
-      <span class="footer__logo-icon">AV</span>
+      <img src={base + "/salesforce-logo.svg"} alt="Salesforce Logo" class="footer__logo-icon" />
       <span>Agentforce Vibes</span>
     </a>
     
-    <nav class="footer__links">
-      <a href={base + "/"} class="footer__link">Home</a>
-      <a href={base + "/blog"} class="footer__link">Blog</a>
-      <a href={base + "/about"} class="footer__link">About</a>
-    </nav>
-    
     <p class="footer__copyright">
-      © {currentYear} Agentforce Vibes. All rights reserved.
+      © Copyright 2025 Salesforce, Inc. All rights reserved. Various trademarks held by their respective owners.<br />
+      Salesforce, Inc. Salesforce Tower, 415 Mission Street, 3rd Floor, San Francisco, CA 94105, United States
     </p>
   </div>
 </footer>

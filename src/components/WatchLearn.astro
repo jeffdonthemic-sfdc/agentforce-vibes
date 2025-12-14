@@ -1,0 +1,78 @@
+---
+import { getCollection } from 'astro:content';
+import VideoCard from './VideoCard.astro';
+
+// Get the 6 most recent videos
+const allVideos = (await getCollection('videos')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+const videos = allVideos.slice(0, 6);
+---
+
+<section class="watch-learn">
+  <div class="container">
+    <div class="watch-learn__header">
+      <h2 class="watch-learn__title">Watch & Learn</h2>
+      <p class="watch-learn__description">
+        Discover quick, insightful videos that break down key features, best practices, and real-world use cases—helping you get more value, faster.
+      </p>
+    </div>
+    
+    <div class="videos-grid">
+      {videos.map((video) => (
+        <VideoCard
+          title={video.data.title}
+          duration={video.data.duration}
+          videoUrl={video.data.videoUrl}
+          description={video.data.description}
+          thumbnail={video.data.thumbnail}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .watch-learn {
+    padding: var(--space-6) 0 var(--space-20);
+    background-color: var(--color-background-secondary);
+  }
+  
+  .watch-learn__header {
+    text-align: left;
+    margin-bottom: var(--space-12);
+  }
+  
+  .watch-learn__title {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-primary);
+  }
+  
+  .watch-learn__description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 900px;
+    line-height: var(--leading-relaxed);
+  }
+  
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  @media (min-width: 768px) {
+    .videos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .videos-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+

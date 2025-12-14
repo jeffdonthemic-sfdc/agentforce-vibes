@@ -1,0 +1,96 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import VideoCard from '../../components/VideoCard.astro';
+
+// Get all videos sorted by date (chronological, newest first)
+const videos = (await getCollection('videos')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="Videos | Agentforce Vibes">
+  <section class="videos-index">
+    <div class="container">
+      <header class="videos-index__header">
+        <h1 class="videos-index__title">Videos</h1>
+        <p class="videos-index__description">
+          Discover quick, insightful videos that break down key features, best practices, and real-world use cases—helping you get more value, faster.
+        </p>
+      </header>
+      
+      {videos.length > 0 ? (
+        <div class="videos-grid">
+          {videos.map((video) => (
+            <VideoCard
+              title={video.data.title}
+              duration={video.data.duration}
+              videoUrl={video.data.videoUrl}
+              description={video.data.description}
+              thumbnail={video.data.thumbnail}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="videos-index__empty">
+          <p>No videos yet. Check back soon!</p>
+        </div>
+      )}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .videos-index {
+    padding: var(--space-16) 0 var(--space-20);
+  }
+  
+  .videos-index__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+  
+  .videos-index__title {
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-4);
+  }
+  
+  .videos-index__description {
+    font-size: var(--text-lg);
+    color: var(--color-text-secondary);
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .videos-index__empty {
+    text-align: center;
+    padding: var(--space-16);
+    background-color: var(--color-surface);
+    border-radius: var(--radius-xl);
+  }
+  
+  .videos-index__empty p {
+    font-size: var(--text-lg);
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+  
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  @media (min-width: 768px) {
+    .videos-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .videos-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+
