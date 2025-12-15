@@ -2,7 +2,7 @@
 title: 'Get Better Results with Better Rules'
 description: Learn how Agentforce Vibes Rules transform tribal knowledge into explicit guidance, helping Agentforce understand your team's coding standards, architecture preferences, and development practices for consistent, high-quality results.
 pubDate: 'Dec 11 2025'
-heroImage: '/agentforce-vibes/unwrap-the-magic.png'
+heroImage: '/agentforce-vibes/better-results-with-better-rules.png'
 ---
 
 Every Salesforce org has its own personality --- a mix of Apex patterns, naming conventions, testing requirements, and security practices that long-time team members just understand. These unwritten rules shape how code is written, tested, and deployed, but they often live only in people's heads or as tribal knowledge.
