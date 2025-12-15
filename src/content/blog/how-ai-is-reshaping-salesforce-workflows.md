@@ -1,7 +1,7 @@
 ---
 title: 'How AI Is Reshaping Salesforce Workflows'
 description: 'AI is fundamentally changing how Salesforce developers work by shifting effort from writing code to reviewing, validating, and exercising judgment. Explore how trust, architecture, and cognitive load are reshaping modern engineering workflows.'
-pubDate: 'Dec 15 2025'
+pubDate: 'Dec 14 2025'
 heroImage: '/agentforce-vibes/how-ai-is-reshaping-salesforce-workflows.png'
 ---
 
