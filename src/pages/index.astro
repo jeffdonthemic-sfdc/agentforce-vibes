@@ -2,50 +2,71 @@
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import FeaturedPost from '../components/FeaturedPost.astro';
-import PostCard from '../components/PostCard.astro';
-import ResourceCards from '../components/ResourceCards.astro';
-import GetStartedCTA from '../components/GetStartedCTA.astro';
 import WatchLearn from '../components/WatchLearn.astro';
-import TrailheadSection from '../components/TrailheadSection.astro';
+import ResourceCard from '../components/ResourceCard.astro';
 
 const base = import.meta.env.BASE_URL;
 
-// Get all posts sorted by date
-const posts = (await getCollection('blog')).sort(
+// Get all resources sorted by date
+const allResources = (await getCollection('resources')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Featured post is the most recent
-const featuredPost = posts[0];
-// Next 6 posts for the grid
-const gridPosts = posts.slice(1, 7);
+// Featured resource is the most recent
+const featuredResource = allResources[0];
+// Rest of resources for the grid
+const resources = allResources.slice(1);
 ---
 
 <BaseLayout title="Agentforce Vibes">
   <Hero 
-    title="Agentforce Vibes" 
-    description="Turn ideas into apps, agents, and workflows. Unleash developer productivity — simply describe what you need, and your AI-powered coding partner writes, tests, and maintains the code. Now, developers of any skill level can build with enterprise-grade vibe coding, grounded in your business context, data, and metadata."
+    title="Agentforce Vibes Resources" 
+    description="Explore curated resources, watch video tutorials, discover best practices, and access essential tools to supercharge your Salesforce development with Agentforce Vibes."
   />
   
-  {featuredPost && <FeaturedPost post={featuredPost} />}
+  {featuredResource && (
+    <section class="featured-post">
+      <div class="container">
+        <a href={featuredResource.data.url} target="_blank" rel="noopener noreferrer" class="featured-post__card">
+          <div class="featured-post__image">
+            <img src={featuredResource.data.image} alt={featuredResource.data.title} />
+          </div>
+          <div class="featured-post__content">
+            <span class="featured-post__badge">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+              </svg>
+              Featured
+            </span>
+            <h2 class="featured-post__title">{featuredResource.data.title}</h2>
+            {featuredResource.data.description && <p class="featured-post__excerpt">{featuredResource.data.description}</p>}
+            <div class="featured-post__meta">{featuredResource.data.type}</div>
+          </div>
+        </a>
+      </div>
+    </section>
+  )}
   
-  <ResourceCards />
-  
-  {gridPosts.length > 0 && (
+  {resources.length > 0 && (
     <section class="posts-section">
       <div class="container">
         <div class="posts-section__header">
-          <h2 class="posts-section__title">Latest Articles</h2>
+          <h2 class="posts-section__title">Latest Resources</h2>
         </div>
         <div class="posts-grid">
-          {gridPosts.map((post) => (
-            <PostCard post={post} />
+          {resources.map((resource) => (
+            <ResourceCard 
+              title={resource.data.title}
+              description={resource.data.description}
+              type={resource.data.type}
+              url={resource.data.url}
+              image={resource.data.image}
+            />
           ))}
         </div>
         <div class="section-view-all">
-          <a href={base + "/blog"} class="view-all-link">
-            View All Articles
+          <a href={base + "/resources"} class="view-all-link">
+            View All Resources
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <path d="M5 12h14"></path>
               <path d="m12 5 7 7-7 7"></path>
@@ -56,9 +77,5 @@ const gridPosts = posts.slice(1, 7);
     </section>
   )}
   
-  <GetStartedCTA />
-  
   <WatchLearn />
-  
-  <TrailheadSection />
 </BaseLayout>
