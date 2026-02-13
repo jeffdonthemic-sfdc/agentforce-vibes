@@ -2,8 +2,6 @@
 import { getCollection } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { readdir } from 'node:fs/promises';
-import { join } from 'node:path';
 
 export async function getStaticPaths() {
   const skills = await getCollection('skills');
@@ -31,33 +29,7 @@ function getGitHubUrl(externalPath: string): string {
 }
 
 const githubUrl = getGitHubUrl(skill.data.externalPath);
-
-// Get all files recursively
-async function getAllFiles(path: string, basePath: string = ''): Promise<string[]> {
-  try {
-    const entries = await readdir(path, { withFileTypes: true });
-    let allFiles: string[] = [];
-    
-    for (const entry of entries) {
-      const relativePath = basePath ? `${basePath}/${entry.name}` : entry.name;
-      
-      if (entry.isFile() && entry.name !== 'SKILL.md') {
-        allFiles.push(relativePath);
-      } else if (entry.isDirectory()) {
-        const subPath = join(path, entry.name);
-        const subFiles = await getAllFiles(subPath, relativePath);
-        allFiles = [...allFiles, ...subFiles];
-      }
-    }
-    
-    return allFiles.sort();
-  } catch (error) {
-    console.error('Error reading directory:', error);
-    return [];
-  }
-}
-
-const files = await getAllFiles(skill.data.externalPath);
+const files = skill.data.files || [];
 ---
 
 <BaseLayout title={`${skill.data.name} | Skills | Agentforce Vibes`} description={skill.data.description}>

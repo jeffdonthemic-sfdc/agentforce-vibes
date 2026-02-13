@@ -42,6 +42,7 @@ const skills = defineCollection({
     description: z.string(),
     externalPath: z.string(),
     category: z.string().optional(),
+    files: z.array(z.string()).optional(),
   }),
 });
 
