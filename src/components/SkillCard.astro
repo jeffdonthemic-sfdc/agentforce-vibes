@@ -1,0 +1,58 @@
+---
+interface Props {
+  name: string;
+  description: string;
+  slug: string;
+  category?: string;
+}
+
+const { name, description, slug, category } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<article class="post-card skill-card">
+  <a href={`${base}/skills/${slug}`}>
+    <div class="post-card__content">
+      <h3 class="post-card__title">{name}</h3>
+      {description && <p class="post-card__excerpt">{description}</p>}
+      <div class="post-card__meta">{category || 'Skill'}</div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .skill-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: all var(--transition-base);
+  }
+  
+  .skill-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-md);
+  }
+  
+  .skill-card a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  .skill-card .post-card__content {
+    padding: var(--space-6);
+  }
+  
+  .skill-card .post-card__title {
+    margin-top: 0;
+  }
+  
+  .skill-card .post-card__excerpt {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

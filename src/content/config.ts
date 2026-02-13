@@ -35,4 +35,14 @@ const resources = defineCollection({
   }),
 });
 
-export const collections = { blog, videos, resources };
+const skills = defineCollection({
+  type: 'content',
+  schema: z.object({
+    name: z.string(),
+    description: z.string(),
+    externalPath: z.string(),
+    category: z.string().optional(),
+  }),
+});
+
+export const collections = { blog, videos, resources, skills };

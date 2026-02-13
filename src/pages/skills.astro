@@ -1,0 +1,165 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SkillCard from '../components/SkillCard.astro';
+
+const allSkills = (await getCollection('skills')).sort((a, b) => 
+  a.data.name.localeCompare(b.data.name)
+);
+const skills = allSkills.slice(0, 5);
+---
+
+<BaseLayout title="Skills | Agentforce Vibes" description="Browse Agentforce Vibes skills for Salesforce development">
+  <section class="page-header">
+    <div class="container">
+      <h1 class="page-header__title">Skills</h1>
+      <p class="page-header__description">
+        Browse reusable skills for Agentforce Vibes to supercharge your Salesforce development workflow.
+      </p>
+    </div>
+  </section>
+
+  <section class="search-section">
+    <div class="container">
+      <div class="search-box">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-icon">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <input 
+          type="text" 
+          id="skills-search" 
+          class="search-input" 
+          placeholder="Filter skills by name or description..."
+          autocomplete="off"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="posts-section">
+    <div class="container">
+      <div id="skills-grid" class="posts-grid skills-grid">
+        {skills.map((skill) => (
+          <SkillCard 
+            name={skill.data.name}
+            description={skill.data.description}
+            slug={skill.slug}
+            category={skill.data.category}
+          />
+        ))}
+      </div>
+      <div id="no-results" class="no-results" style="display: none;">
+        <p>No skills found matching your search.</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .search-section {
+    padding: var(--space-8) 0;
+    background-color: var(--color-surface);
+  }
+
+  .search-box {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: var(--space-4);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    color: var(--color-text-secondary);
+    pointer-events: none;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: var(--space-4) var(--space-4) var(--space-4) calc(var(--space-4) * 2 + 20px);
+    font-size: var(--text-lg);
+    border: 2px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-background);
+    color: var(--color-text-primary);
+    transition: border-color var(--transition-fast);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+
+  .no-results {
+    text-align: center;
+    padding: var(--space-16) var(--space-4);
+    color: var(--color-text-secondary);
+    font-size: var(--text-lg);
+  }
+
+  /* Skills grid - 4 columns */
+  .skills-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .skills-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .skills-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .skills-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+</style>
+
+<script>
+  const searchInput = document.getElementById('skills-search') as HTMLInputElement;
+  const skillsGrid = document.getElementById('skills-grid') as HTMLElement;
+  const noResults = document.getElementById('no-results') as HTMLElement;
+  const skillCards = Array.from(skillsGrid.querySelectorAll('.post-card'));
+
+  searchInput?.addEventListener('input', (e) => {
+    const searchTerm = (e.target as HTMLInputElement).value.toLowerCase().trim();
+    
+    let visibleCount = 0;
+
+    skillCards.forEach((card) => {
+      const titleEl = card.querySelector('.post-card__title');
+      const excerptEl = card.querySelector('.post-card__excerpt');
+      
+      const title = titleEl?.textContent?.toLowerCase() || '';
+      const description = excerptEl?.textContent?.toLowerCase() || '';
+      
+      const matches = title.includes(searchTerm) || description.includes(searchTerm);
+      
+      if (matches || searchTerm === '') {
+        (card as HTMLElement).style.display = '';
+        visibleCount++;
+      } else {
+        (card as HTMLElement).style.display = 'none';
+      }
+    });
+
+    if (visibleCount === 0 && searchTerm !== '') {
+      noResults.style.display = 'block';
+      skillsGrid.style.display = 'none';
+    } else {
+      noResults.style.display = 'none';
+      skillsGrid.style.display = '';
+    }
+  });
+</script>

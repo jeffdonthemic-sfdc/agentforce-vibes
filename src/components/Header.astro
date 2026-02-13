@@ -12,6 +12,7 @@ const base = import.meta.env.BASE_URL;
     
     <nav class="header__nav">
       <a href={base + "/"} class:list={["header__nav-link", { active: pathname === base + "/" }]}>Home</a>
+      <a href={base + "/skills"} class:list={["header__nav-link", { active: pathname.startsWith(base + "/skills") }]}>Skills</a>
       <a href={base + "/resources"} class:list={["header__nav-link", { active: pathname.startsWith(base + "/resources") }]}>Resources</a>
       <a href={base + "/videos"} class:list={["header__nav-link", { active: pathname.startsWith(base + "/videos") }]}>Videos</a>
       <a href="https://developer.salesforce.com/docs/platform/einstein-for-devs/guide/einstein-setup.html" class="header__nav-link" target="_blank" rel="noopener noreferrer">Docs</a>

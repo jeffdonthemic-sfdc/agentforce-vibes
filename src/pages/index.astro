@@ -4,6 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import WatchLearn from '../components/WatchLearn.astro';
 import ResourceCard from '../components/ResourceCard.astro';
+import SkillsCTA from '../components/SkillsCTA.astro';
 
 const base = import.meta.env.BASE_URL;
 
@@ -21,7 +22,7 @@ const resources = allResources.slice(1);
 <BaseLayout title="Agentforce Vibes">
   <Hero 
     title="Agentforce Vibes Resources" 
-    description="Explore curated resources, watch video tutorials, discover best practices, and access essential tools to supercharge your Salesforce development with Agentforce Vibes."
+    description="Explore development Skills, curated resources, watch video tutorials, discover best practices, and access essential tools to supercharge your Salesforce development with Agentforce Vibes."
   />
   
   {featuredResource && (
@@ -46,6 +47,8 @@ const resources = allResources.slice(1);
       </div>
     </section>
   )}
+  
+  <SkillsCTA />
   
   {resources.length > 0 && (
     <section class="posts-section">

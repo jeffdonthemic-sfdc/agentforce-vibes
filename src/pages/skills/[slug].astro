@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { readdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+export async function getStaticPaths() {
+  const skills = await getCollection('skills');
+  return skills.map((skill) => ({
+    params: { slug: skill.slug },
+    props: { skill },
+  }));
+}
+
+interface Props {
+  skill: CollectionEntry<'skills'>;
+}
+
+const { skill } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+// Derive GitHub URL from external path
+function getGitHubUrl(externalPath: string): string {
+  // Extract the path after /skills/
+  const match = externalPath.match(/\/skills\/(.+)$/);
+  if (match) {
+    return `https://github.com/forcedotcom/afv-library/tree/main/skills/${match[1]}`;
+  }
+  return '';
+}
+
+const githubUrl = getGitHubUrl(skill.data.externalPath);
+
+// Get all files recursively
+async function getAllFiles(path: string, basePath: string = ''): Promise<string[]> {
+  try {
+    const entries = await readdir(path, { withFileTypes: true });
+    let allFiles: string[] = [];
+    
+    for (const entry of entries) {
+      const relativePath = basePath ? `${basePath}/${entry.name}` : entry.name;
+      
+      if (entry.isFile() && entry.name !== 'SKILL.md') {
+        allFiles.push(relativePath);
+      } else if (entry.isDirectory()) {
+        const subPath = join(path, entry.name);
+        const subFiles = await getAllFiles(subPath, relativePath);
+        allFiles = [...allFiles, ...subFiles];
+      }
+    }
+    
+    return allFiles.sort();
+  } catch (error) {
+    console.error('Error reading directory:', error);
+    return [];
+  }
+}
+
+const files = await getAllFiles(skill.data.externalPath);
+---
+
+<BaseLayout title={`${skill.data.name} | Skills | Agentforce Vibes`} description={skill.data.description}>
+  <article class="post">
+    <header class="post-header">
+      <div class="container">
+        <div class="post-header__inner">
+          <div class="post-header__meta">
+            <a href={base + "/skills"} class="breadcrumb">← Back to Skills</a>
+          </div>
+          <h1 class="post-header__title">{skill.data.name}</h1>
+          {skill.data.description && <p class="post-header__description">{skill.data.description}</p>}
+          {githubUrl && (
+            <div class="skill-github-link">
+              <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="github-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                <span class="button-text">
+                  <strong>Get this Skill from the Agentforce Vibes Library</strong>
+                </span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="arrow-icon">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+              </a>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
+    
+    <div class="container">
+      <div class="post-content">
+        {files.length > 0 && (
+          <div class="bundled-resources">
+            <h2>Bundled Resources</h2>
+            <ul class="file-list">
+              {files.map((file) => (
+                <li>{file}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .breadcrumb {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: opacity var(--transition-fast);
+  }
+
+  .breadcrumb:hover {
+    opacity: 0.8;
+  }
+
+  .skill-github-link {
+    margin-top: var(--space-6);
+  }
+
+  .github-button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-6);
+    background-color: var(--color-primary);
+    color: white;
+    text-decoration: none;
+    border-radius: var(--radius-lg);
+    font-size: var(--text-base);
+    transition: all var(--transition-base);
+    box-shadow: 0 2px 8px rgba(0, 112, 210, 0.3);
+  }
+
+  .github-button:hover {
+    background-color: #005fb2;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 112, 210, 0.4);
+  }
+
+  .github-button svg:first-child {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  .button-text {
+    flex: 1;
+  }
+
+  .button-text strong {
+    font-weight: 600;
+  }
+
+  .arrow-icon {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    transition: transform var(--transition-base);
+  }
+
+  .github-button:hover .arrow-icon {
+    transform: translateX(4px);
+  }
+
+  /* Override post-content max-width to match header */
+  .post .post-content {
+    max-width: 800px;
+  }
+
+  .bundled-resources {
+    margin-top: var(--space-4);
+    padding-left: 0;
+    margin-left: 0;
+  }
+
+  .bundled-resources h2 {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-4);
+    color: var(--color-text-primary);
+  }
+
+  .file-list {
+    padding-left: var(--space-8);
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+  }
+
+  .file-list li {
+    margin-bottom: var(--space-2);
+  }
+</style>
